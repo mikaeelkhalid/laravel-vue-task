@@ -18,7 +18,9 @@ class PostalCodeConflictValidatorController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Sale::select('category')->distinct()->get();
+        
+        return response()->json(['message'=> "categories fetch success", 'status_code'=> 200, "data"=> $categories ]);
     }
 
     /**
@@ -40,8 +42,6 @@ class PostalCodeConflictValidatorController extends Controller
     
     public function store(Request $request)
     {
-
-        
 
     $validation = Validator::make($request->all(), [ 
         'sales_guy_id' => 'required',
