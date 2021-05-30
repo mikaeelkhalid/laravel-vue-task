@@ -1,5 +1,5 @@
 <template>
-    <h1>hello from data table</h1>
+    <h1>hello</h1>
 </template>
 
 <script>

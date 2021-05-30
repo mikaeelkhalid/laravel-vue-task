@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,13 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-<<<<<<< HEAD
 mix.js("resources/js/app.js", "public/js")
     .vue()
     .postCss("resources/css/app.css", "public/css", []);
-=======
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
->>>>>>> parent of 3a0187b (integrating vue into laravel)
