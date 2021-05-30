@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/postal-validator', [PostalCodeConflictValidatorController::class, 'store'])->name('store-postal-codes');
+
+Route::get('/get-categories', [PostalCodeConflictValidatorController::class, 'index'])->name('get-catogries');
+
