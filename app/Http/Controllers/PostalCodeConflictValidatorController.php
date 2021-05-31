@@ -28,12 +28,11 @@ class PostalCodeConflictValidatorController extends Controller
 
     public function getSales(Request $request)
     {
-         
+        // dd($request->category);
 
         $validation = Validator::make($request->all(), [ 
-            
-            'stats' => 'required',
-            // 'category' => 'required'
+        
+            'category' => 'required'
         
         ]);
 
@@ -43,19 +42,36 @@ class PostalCodeConflictValidatorController extends Controller
         }
         else {
 
-                $total_stats= $request->stats;
 
-                // dd($total_stats);
+                $stats = Sale::select('stats')->distinct()->get();
 
+                $stats= json_decode($stats);
+
+                // dd($stats);
+
+                $stats_array = [];
+
+                for ($i = 0; $i < count($stats); $i++){
+
+                    $stats_array[$i] = $stats[$i]->stats;
+
+                }
+
+                $total_cat= $request->category;
             
+               // dd($total_cat);
+
                 $data=[];
 
-            foreach($total_stats as $item) {
+        foreach($total_cat as $cat){
 
-                $result = Sale::where('stats', $item)->count();
+            foreach($stats_array as $item) {
 
-                array_push($data,$result);
+                $result = Sale::where('stats', $item)->where('category',$cat)->count();
+                    
+                array_push($data, $result);
 
+                }
 
             }
 
