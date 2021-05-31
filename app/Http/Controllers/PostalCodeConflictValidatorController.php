@@ -23,6 +23,52 @@ class PostalCodeConflictValidatorController extends Controller
         return response()->json(['message'=> "categories fetch success", 'status_code'=> 200, "data"=> $categories ]);
     }
 
+    public function getStats()
+    {
+        $stats = Sale::select('stats')->distinct()->get();
+        
+        return response()->json(['message'=> "stats fetch success", 'status_code'=> 200, "data"=> $stats ]);
+    }
+
+    public function getSales(Request $request)
+    {
+         
+
+        $validation = Validator::make($request->all(), [ 
+            
+            'stats' => 'required',
+            'category' => 'required'
+        
+        ]);
+
+        if ($validation->fails())
+        {
+            return response()->json(["Error"=> $validation->messages()]);
+        }
+        else {
+
+                $total_stats= $request->stats;
+
+                // dd($total_stats);
+
+            
+                $data=[];
+
+            foreach($total_stats as $item) {
+
+                $result = Sale::where('stats', $item)->count();
+
+                array_push($data,$result);
+
+
+            }
+
+            return response()->json(['message'=> "data fetched", 'status_code'=> 200, 'data'=> $data]) ;
+
+
+        }
+    } 
+
     /**
      * Show the form for creating a new resource.
      *
