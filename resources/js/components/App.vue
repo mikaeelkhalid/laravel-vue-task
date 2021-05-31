@@ -6,9 +6,7 @@
                 <p class="lead">Local Hero Laravel + Vue Assesment</p>
             </div>
         </div>
-        <div class="mt-5 mb-5">
-            <NavBar />
-        </div>
+
         <div class="container mt-5">
             <SelectDropDown />
         </div>
@@ -21,14 +19,12 @@
 <script>
 import DataTable from "./DataTable.vue";
 import SelectDropDown from "./SelectDropDown.vue";
-import NavBar from "./NavBar.vue";
 
 export default {
     name: "App",
     components: {
         DataTable,
         SelectDropDown,
-        NavBar,
     },
 };
 </script>

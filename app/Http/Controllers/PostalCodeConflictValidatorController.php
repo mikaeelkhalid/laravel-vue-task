@@ -37,7 +37,7 @@ class PostalCodeConflictValidatorController extends Controller
         $validation = Validator::make($request->all(), [ 
             
             'stats' => 'required',
-            'category' => 'required'
+            // 'category' => 'required'
         
         ]);
 
