@@ -23,3 +23,7 @@ Route::post('/postal-validator', [PostalCodeConflictValidatorController::class, 
 
 Route::get('/get-categories', [PostalCodeConflictValidatorController::class, 'index'])->name('get-catogries');
 
+Route::get('/get-stats', [PostalCodeConflictValidatorController::class, 'getStats'])->name('get-stats');
+
+Route::post('/get-sales', [PostalCodeConflictValidatorController::class, 'getSales'])->name('get-sales');
+
