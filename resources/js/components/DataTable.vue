@@ -58,9 +58,11 @@ export default {
         try {
             let response = await axios.post(
                 `http://localhost:8000/api/get-sales`,
-                { stats: this.stats }
+
+                { category: this.categories_uni }
             );
             this.count_stats = await response.data.data;
+
             console.log(this.count_stats);
         } catch (e) {
             this.errors.push(e);

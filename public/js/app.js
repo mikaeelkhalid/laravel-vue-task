@@ -19815,7 +19815,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.prev = 25;
               _context.next = 28;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://localhost:8000/api/get-sales", {
-                stats: _this.stats
+                category: _this.categories_uni
               });
 
             case 28:
