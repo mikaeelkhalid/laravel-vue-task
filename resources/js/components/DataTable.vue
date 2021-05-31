@@ -3,64 +3,69 @@
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Branche</th>
+                    <th scope="col" v-for="(item, i) in stats" :key="i">
+                        {{ item.stats }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <tr v-for="(item, i) in categories_uni" :key="i" scope="row">
+                    <th scope="row">{{ item.category }}</th>
+                    <td v-for="(item, i) in count_stats" :key="i">
+                        {{ item }}
+                    </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-                <tfoot class="table-dark">
-                    <tr>
-                        <th>total</th>
-                        <td>212</td>
-                        <td>121</td>
-                        <td>43</td>
-                    </tr>
-                </tfoot>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-    data(){
-        
-        return{
+    data() {
+        return {
             categories: [],
-            errors: [] 
-        }
-        
+            categories_uni: [],
+            stats: [],
+            count_stats: [],
+            errors: [],
+        };
     },
     async created() {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/get-categories`)
-      this.categories = response.data
-      console.log(this.categories)
-    } catch (e) {
-      this.errors.push(e)
-    }
-  }
+        try {
+            const response = await axios.get(
+                `http://localhost:8000/api/get-categories`
+            );
+
+            this.categories_uni = await response.data.data;
+        } catch (e) {
+            this.errors.push(e);
+        }
+
+        try {
+            let response = await axios.get(
+                `http://localhost:8000/api/get-stats`
+            );
+            this.stats = await response.data.data;
+
+            console.log(this.stats);
+        } catch (e) {
+            this.errors.push(e);
+        }
+
+        try {
+            let response = await axios.post(
+                `http://localhost:8000/api/get-sales`,
+                { stats: this.stats }
+            );
+            this.count_stats = await response.data.data;
+            console.log(this.count_stats);
+        } catch (e) {
+            this.errors.push(e);
+        }
+    },
 };
 </script>
 
