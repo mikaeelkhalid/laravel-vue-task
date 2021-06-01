@@ -10,20 +10,17 @@
         <div class="container mt-5">
             <SelectDropDown />
         </div>
-        <div class="container mt-5">
-            <DataTable />
-        </div>
     </div>
 </template>
 
 <script>
-import DataTable from "./DataTable.vue";
+// import DataTable from "./DataTable.vue";
 import SelectDropDown from "./SelectDropDown.vue";
 
 export default {
     name: "App",
     components: {
-        DataTable,
+        // DataTable,
         SelectDropDown,
     },
 };

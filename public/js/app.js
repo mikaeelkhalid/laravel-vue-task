@@ -19713,15 +19713,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _DataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DataTable.vue */ "./resources/js/components/DataTable.vue");
-/* harmony import */ var _SelectDropDown_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SelectDropDown.vue */ "./resources/js/components/SelectDropDown.vue");
-
+/* harmony import */ var _SelectDropDown_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SelectDropDown.vue */ "./resources/js/components/SelectDropDown.vue");
+// import DataTable from "./DataTable.vue";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   components: {
-    DataTable: _DataTable_vue__WEBPACK_IMPORTED_MODULE_0__.default,
-    SelectDropDown: _SelectDropDown_vue__WEBPACK_IMPORTED_MODULE_1__.default
+    // DataTable,
+    SelectDropDown: _SelectDropDown_vue__WEBPACK_IMPORTED_MODULE_0__.default
   }
 });
 
@@ -19750,20 +19749,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["showTable", "values", "count_stats", "value"],
   data: function data() {
     return {
       categories: [],
       categories_uni: [],
       stats: [],
-      count_stats: [],
-      errors: []
+      // count_stats: [],
+      errors: [],
+      tdLeft: "<td>",
+      tdRight: "</td>"
     };
   },
-  created: function created() {
+  setup: function setup(props) {
+    console.log(props.showTable);
+  },
+  created: function created(props) {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var response, _response, _response2;
+      var response, _response;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
@@ -19812,35 +19817,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this.errors.push(_context.t1);
 
             case 25:
-              _context.prev = 25;
-              _context.next = 28;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://localhost:8000/api/get-sales", {
-                category: _this.categories_uni
-              });
-
-            case 28:
-              _response2 = _context.sent;
-              _context.next = 31;
-              return _response2.data.data;
-
-            case 31:
-              _this.count_stats = _context.sent;
-              console.log(_this.count_stats);
-              _context.next = 38;
-              break;
-
-            case 35:
-              _context.prev = 35;
-              _context.t2 = _context["catch"](25);
-
-              _this.errors.push(_context.t2);
-
-            case 38:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 9], [12, 22], [25, 35]]);
+      }, _callee, null, [[0, 9], [12, 22]]);
     }))();
   }
 });
@@ -19861,8 +19842,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vueform_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vueform/multiselect */ "./node_modules/@vueform/multiselect/dist/multiselect.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _DataTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DataTable.vue */ "./resources/js/components/DataTable.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -19871,40 +19853,93 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_1__.default
+    Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_1__.default,
+    DataTable: _DataTable_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {
-      value: null,
+      value: [],
+      values: [],
+      showTable: false,
       options: [],
+      count_stats: [],
       categories: [],
       errors: []
     };
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    toggleSelected: function toggleSelected(value) {
+      var _this = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.values.push(value);
+
+                _this.showTable = true;
+                _context.prev = 2;
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://localhost:8000/api/get-sales", {
+                  category: _this.values
+                });
+
+              case 5:
+                response = _context.sent;
+                _context.next = 8;
+                return response.data.data;
+
+              case 8:
+                _this.count_stats = _context.sent;
+                console.log(_this.count_stats);
+                _context.next = 15;
+                break;
+
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](2);
+
+                _this.errors.push(_context.t0);
+
+              case 15:
+                _this.values = [];
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[2, 12]]);
+      }))();
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/get-categories");
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/api/get-categories");
 
             case 3:
-              response = _context.sent;
-              _context.next = 6;
+              response = _context2.sent;
+              _context2.next = 6;
               return response.data.data;
 
             case 6:
-              _this.categories = _context.sent;
-              _context.next = 9;
-              return _this.categories.map(function (item) {
+              _this2.categories = _context2.sent;
+              _context2.next = 9;
+              return _this2.categories.map(function (item) {
                 return {
                   value: item.category,
                   label: item.category
@@ -19912,22 +19947,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               });
 
             case 9:
-              _this.options = _context.sent;
-              _context.next = 15;
+              _this2.options = _context2.sent;
+              _context2.next = 15;
               break;
 
             case 12:
-              _context.prev = 12;
-              _context.t0 = _context["catch"](0);
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](0);
 
-              _this.errors.push(_context.t0);
+              _this2.errors.push(_context2.t0);
 
             case 15:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, null, [[0, 12]]);
+      }, _callee2, null, [[0, 12]]);
     }))();
   }
 });
@@ -19966,15 +20001,10 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 var _hoisted_3 = {
   "class": "container mt-5"
 };
-var _hoisted_4 = {
-  "class": "container mt-5"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SelectDropDown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SelectDropDown");
 
-  var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SelectDropDown)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable)])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SelectDropDown)])]);
 }
 
 /***/ }),
@@ -19993,23 +20023,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "table table-striped"
+  key: 0
 };
 var _hoisted_2 = {
+  "class": "table table-striped"
+};
+var _hoisted_3 = {
   "class": "table-dark"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
-  scope: "col"
-}, "Branche", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Branche", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = {
-  scope: "row"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.stats, function (item, i) {
+  return $props.showTable ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.stats, function (item, i) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("th", {
       scope: "col",
       key: i
@@ -20018,24 +20046,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     );
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.categories_uni, function (item, i) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
-      key: i,
-      scope: "row"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.category), 1
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr v-for=\"(item, i) in categories_uni\" :key=\"i\" scope=\"row\">\n                    <th scope=\"row\">{{ item.category }}</th>\n                </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.value[0]), 1
+  /* TEXT */
+  ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.count_stats, function (item, i) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", {
+      key: i
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item), 1
     /* TEXT */
-    ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.count_stats, function (item, i) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", {
-        key: i
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item), 1
-      /* TEXT */
-      );
-    }), 128
-    /* KEYED_FRAGMENT */
-    ))]);
+    );
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])]);
+  ))])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -20053,10 +20074,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "container mt-5"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Multiselect");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+  var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     modelValue: $data.value,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.value = $event;
@@ -20065,10 +20091,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Select value",
     searchable: false,
     createTag: true,
-    options: $data.options
+    options: $data.options,
+    onSelect: $options.toggleSelected
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options"])]);
+  , ["modelValue", "options", "onSelect"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+    showTable: $data.showTable,
+    values: $data.values,
+    count_stats: $data.count_stats,
+    value: $data.value
+  }, null, 8
+  /* PROPS */
+  , ["showTable", "values", "count_stats", "value"])])], 64
+  /* STABLE_FRAGMENT */
+  );
 }
 
 /***/ }),
